@@ -1,11 +1,26 @@
 import {
-  Map, Building, Bus, UtensilsCrossed, Coffee, ShoppingCart, Stethoscope,
-  BookOpen, Dumbbell, Wifi, Printer, Leaf, Compass, Camera,
-  HelpCircle, BedDouble, Route, Car, ShoppingBag, Lightbulb,
+  Map, Bus, UtensilsCrossed, Coffee, ShoppingCart, Stethoscope,
+  Dumbbell, Printer, Leaf, Compass, Camera,
+  BedDouble, Route, Car, Lightbulb, MapPin, ShoppingBag, Clock,
 } from 'lucide-react';
 import PageShell from '../components/PageShell';
-import Reveal from '../components/Reveal';
 import SectionHeading from '../components/SectionHeading';
+import Reveal from '../components/Reveal';
+import FaqAccordion from '../components/FaqAccordion';
+
+const hostels = [
+  { name: 'Block A — Boys', type: 'Non-AC', accent: 'from-brand-500 to-brand-700' },
+  { name: 'Block B — Boys', type: 'AC', accent: 'from-accent-500 to-accent-700' },
+  { name: 'Block C — Girls', type: 'Non-AC', accent: 'from-ink-700 to-ink-900' },
+  { name: 'Block D — Girls', type: 'AC', accent: 'from-brand-500 to-accent-500' },
+];
+
+const cafeterias = [
+  { name: 'Main Food Court', specialty: 'All cuisines', hours: '7 AM – 10 PM', accent: 'from-brand-500 to-brand-700' },
+  { name: 'Coffee Corner', specialty: 'Café & snacks', hours: '8 AM – 8 PM', accent: 'from-accent-500 to-accent-700' },
+  { name: 'Quick Bites', specialty: 'Fast food', hours: '9 AM – 11 PM', accent: 'from-ink-700 to-ink-900' },
+  { name: 'Healthy Hub', specialty: 'Salads & juices', hours: '8 AM – 9 PM', accent: 'from-accent-500 to-cyan-500' },
+];
 
 const faqs = [
   { q: 'What time do the gates close?', a: 'Placeholder answer — campus gate timings will be added in a future release.' },
@@ -27,35 +42,6 @@ export default function CampusGuide() {
         icon: Map,
       }}
       sections={[
-        {
-          kind: 'split',
-          eyebrow: 'Navigation',
-          title: 'Campus map',
-          description: 'An interactive, searchable guide to every block, lab and facility on campus.',
-          split: {
-            icon: Compass,
-            title: 'A campus you can actually navigate',
-            description: 'Searchable blocks, an interactive map and transport info — designed so you never feel lost in your first week.',
-            bullets: [
-              'Searchable directory of academic blocks, labs and faculty cabins',
-              'Interactive campus map with searchable points of interest',
-              'Bus routes, timings and shuttle stops in and around campus',
-              'Accessibility notes and shortcuts between buildings',
-            ],
-          },
-        },
-        {
-          kind: 'grid',
-          eyebrow: 'Stay',
-          title: 'Hostel guide',
-          description: 'Everything you need to know about hostel life at VIT Chennai.',
-          items: [
-            { icon: BedDouble, title: 'Hostel blocks', description: 'A directory of hostel blocks for men and women with capacity and wardens.' },
-            { icon: Building, title: 'Room types', description: 'AC, non-AC, single and shared room options with approximate costs.' },
-            { icon: BookOpen, title: 'Hostel rules', description: 'Timings, visitors policy and do-and-dont rules at a glance.' },
-            { icon: Wifi, title: 'Hostel Wi-Fi', description: 'How to connect, data limits and troubleshooting tips.' },
-          ],
-        },
         {
           kind: 'grid',
           eyebrow: 'Food & essentials',
@@ -96,35 +82,109 @@ export default function CampusGuide() {
         },
       ]}
       closing={
-        <section>
-          <SectionHeading
-            eyebrow="Help"
-            title="Frequently asked questions"
-            description="Quick answers to the questions students ask most about campus life."
-          />
-          <div className="grid gap-4 sm:grid-cols-2">
-            {faqs.map((f, i) => (
-              <Reveal key={i} delay={i * 50}>
-                <details className="group rounded-3xl glass-card p-5 transition-all duration-300 hover:shadow-card">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
-                    <span className="flex items-center gap-3">
-                      <span className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-ink-900 text-white shadow-glow">
-                        <HelpCircle className="h-4 w-4" />
+        <>
+          <section>
+            <SectionHeading
+              eyebrow="Navigation"
+              title="Interactive campus map"
+              description="A placeholder for the interactive, searchable map coming in a future release."
+            />
+            <Reveal variant="scale">
+              <div className="relative overflow-hidden rounded-4xl border border-ink-200/70 bg-ink-50">
+                <div
+                  className="absolute inset-0 opacity-[0.06]"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(to right, #0b0d10 1px, transparent 1px), linear-gradient(to bottom, #0b0d10 1px, transparent 1px)',
+                    backgroundSize: '48px 48px',
+                  }}
+                />
+                <div className="relative flex min-h-[22rem] flex-col items-center justify-center gap-4 p-8 text-center">
+                  <span className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-ink-900 text-white shadow-glow">
+                    <Compass className="h-8 w-8 animate-spin-slow" />
+                    <span className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
+                  </span>
+                  <h3 className="font-display text-xl font-bold tracking-tight text-ink-900">
+                    Interactive map coming soon
+                  </h3>
+                  <p className="max-w-md text-sm leading-relaxed text-ink-500">
+                    A searchable, zoomable campus map with points of interest will replace this placeholder in an upcoming release.
+                  </p>
+                  <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
+                    {['Main Block', 'Library', 'Food Court', 'Hostels', 'Sports'].map((p) => (
+                      <span key={p} className="inline-flex items-center gap-1.5 rounded-full border border-ink-200 bg-white/70 px-3 py-1 text-[11px] font-medium text-ink-500 backdrop-blur">
+                        <MapPin className="h-3 w-3 text-brand-500" />
+                        {p}
                       </span>
-                      <span className="font-display text-[15px] font-semibold tracking-tight text-ink-900">
-                        {f.q}
-                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </section>
+
+          <section>
+            <SectionHeading
+              eyebrow="Stay"
+              title="Hostel quick navigation"
+              description="Jump to your hostel block — details and rules open in a future release."
+            />
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {hostels.map((h, i) => (
+                <Reveal key={h.name} delay={i * 50} variant="scale">
+                  <button
+                    type="button"
+                    className="sheen-host group flex w-full flex-col items-start gap-3 rounded-3xl glass-card p-5 text-left transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:shadow-lift"
+                  >
+                    <span className={`relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${h.accent} text-white shadow-glow transition-transform duration-500 group-hover:scale-110`}>
+                      <BedDouble className="h-5 w-5" />
+                      <span className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/15" />
                     </span>
-                    <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full border border-ink-200 text-ink-400 transition-transform duration-300 group-open:rotate-45">
-                      +
+                    <div>
+                      <div className="font-display text-[14px] font-semibold tracking-tight text-ink-900">{h.name}</div>
+                      <div className="mt-0.5 text-[12px] text-ink-500">{h.type}</div>
+                    </div>
+                  </button>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <SectionHeading
+              eyebrow="Eat"
+              title="Cafeteria cards"
+              description="Quick info on where to eat, with timings and specialties."
+            />
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {cafeterias.map((c, i) => (
+                <Reveal key={c.name} delay={i * 50} variant="scale">
+                  <article className="sheen-host group relative h-full overflow-hidden rounded-3xl glass-card p-5 transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:shadow-lift">
+                    <div className={`pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-gradient-to-br ${c.accent} opacity-20 blur-2xl transition-opacity duration-500 group-hover:opacity-40`} />
+                    <span className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-ink-900 text-white shadow-glow transition-transform duration-500 group-hover:scale-110">
+                      <UtensilsCrossed className="h-5 w-5" />
                     </span>
-                  </summary>
-                  <p className="mt-3 pl-12 text-[13px] leading-relaxed text-ink-500">{f.a}</p>
-                </details>
-              </Reveal>
-            ))}
-          </div>
-        </section>
+                    <h3 className="relative mt-4 font-display text-[15px] font-semibold tracking-tight text-ink-900">{c.name}</h3>
+                    <p className="relative mt-1 text-[12px] text-ink-500">{c.specialty}</p>
+                    <p className="relative mt-3 inline-flex items-center gap-1.5 text-[11px] font-medium text-ink-400">
+                      <Clock className="h-3 w-3" />
+                      {c.hours}
+                    </p>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <SectionHeading
+              eyebrow="Help"
+              title="Frequently asked questions"
+              description="Quick answers to the questions students ask most about campus life."
+            />
+            <FaqAccordion items={faqs} columns={2} />
+          </section>
+        </>
       }
       closingCta={{
         title: 'Campus, decoded.',

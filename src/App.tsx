@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import PageLoader from './components/PageLoader';
+import BackToTop from './components/BackToTop';
 import Home from './pages/Home';
 import Academics from './pages/Academics';
 import CodingHub from './pages/CodingHub';
@@ -58,6 +59,7 @@ export default function App() {
         <AnimatedRoutes />
         <Footer />
       </div>
+      <BackToTop />
     </BrowserRouter>
   );
 }

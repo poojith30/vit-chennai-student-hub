@@ -1,6 +1,7 @@
 import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import PageHero from './PageHero';
+import Breadcrumbs from './Breadcrumbs';
 import SectionHeading from './SectionHeading';
 import FeatureGrid from './sections/FeatureGrid';
 import BentoGrid from './sections/BentoGrid';
@@ -34,6 +35,7 @@ export default function PageShell({ hero, sections, closing, closingCta }: PageS
   return (
     <>
       <PageHero {...hero} />
+      <Breadcrumbs />
       <div className="section-shell space-y-20 pb-10">
         {sections.map((section, si) => (
           <SectionRenderer key={si} section={section} />

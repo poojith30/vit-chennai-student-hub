@@ -1,11 +1,53 @@
+import { useMemo, useState } from 'react';
 import {
   BookOpen, FileText, FolderOpen, Download, Video, Link2, Bookmark,
   GraduationCap, FlaskConical, Cpu, ShieldCheck, Library, Languages, Star,
-  Globe, Smartphone, Award, FileStack, LayoutTemplate, FileType,
+  Globe, Smartphone, Award, LayoutTemplate, FileType, Inbox,
 } from 'lucide-react';
 import PageShell from '../components/PageShell';
+import SectionHeading from '../components/SectionHeading';
+import SearchBar from '../components/SearchBar';
+import ChipFilter from '../components/ChipFilter';
+import EmptyState from '../components/EmptyState';
+import { ResourceCardGrid, type ResourceCardItem } from '../components/ResourceCard';
+
+const resources: ResourceCardItem[] = [
+  { id: 'r-notes', icon: FileText, title: 'Subject notes', description: 'Notes organized by semester, subject and specialization for quick access.', tag: 'Notes', category: 'study', bookmarkable: true, downloadable: true },
+  { id: 'r-books', icon: FolderOpen, title: 'Reference books', description: 'Recommended textbooks with student annotations and chapter highlights.', tag: 'Books', category: 'study', bookmarkable: true, downloadable: true },
+  { id: 'r-papers', icon: Download, title: 'Past papers', description: 'CAT and FAT papers for practice and revision, sorted by semester.', tag: 'Papers', category: 'study', bookmarkable: true, downloadable: true },
+  { id: 'r-cheats', icon: Bookmark, title: 'Cheat sheets', description: 'Compact one-pagers for quick revision before exams.', tag: 'Cheat sheets', category: 'downloads', bookmarkable: true, downloadable: true },
+  { id: 'r-websites', icon: Globe, title: 'Best websites', description: 'A categorized directory of student-useful websites and references.', tag: 'Websites', category: 'lists', bookmarkable: true },
+  { id: 'r-apps', icon: Smartphone, title: 'Best apps', description: 'Mobile apps for study, coding, notes and campus life.', tag: 'Apps', category: 'lists', bookmarkable: true },
+  { id: 'r-courses', icon: Award, title: 'Free courses', description: 'Free and audited courses worth taking alongside your coursework.', tag: 'Courses', category: 'learning', bookmarkable: true },
+  { id: 'r-videos', icon: Video, title: 'Video playlists', description: 'Hand-picked YouTube playlists for every core subject, reviewed by seniors.', tag: 'Videos', category: 'learning', bookmarkable: true },
+  { id: 'r-templates', icon: LayoutTemplate, title: 'Templates', description: 'Resume, project report and presentation templates ready to use.', tag: 'Templates', category: 'downloads', bookmarkable: true, downloadable: true },
+  { id: 'r-pdfs', icon: FileType, title: 'PDFs', description: 'Curated PDFs of notes, books and reference material.', tag: 'PDFs', category: 'downloads', bookmarkable: true, downloadable: true },
+  { id: 'r-links', icon: Link2, title: 'Useful links', description: 'A bookmarkable collection of links worth keeping close.', tag: 'Links', category: 'lists', bookmarkable: true },
+  { id: 'r-reading', icon: Star, title: 'Reading lists', description: 'Curated reading lists for going deeper into each specialization.', tag: 'Reading', category: 'learning', bookmarkable: true },
+];
+
+const categories = [
+  { label: 'Study material', value: 'study' },
+  { label: 'Downloads', value: 'downloads' },
+  { label: 'Lists', value: 'lists' },
+  { label: 'Learning', value: 'learning' },
+];
 
 export default function Resources() {
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('all');
+
+  const filtered = useMemo(() => {
+    return resources.filter((r) => {
+      const matchCat = category === 'all' || r.category === category;
+      const matchQ =
+        !query ||
+        r.title.toLowerCase().includes(query.toLowerCase()) ||
+        r.description.toLowerCase().includes(query.toLowerCase());
+      return matchCat && matchQ;
+    });
+  }, [query, category]);
+
   return (
     <PageShell
       hero={{
@@ -16,55 +58,6 @@ export default function Resources() {
         icon: BookOpen,
       }}
       sections={[
-        {
-          kind: 'grid',
-          eyebrow: 'Notes & references',
-          title: 'Study material',
-          description: 'Subject-organized notes, references and past papers.',
-          items: [
-            { icon: FileText, title: 'Subject notes', description: 'Notes organized by semester, subject and specialization for quick access.' },
-            { icon: FolderOpen, title: 'Reference books', description: 'Recommended textbooks with student annotations and chapter highlights.' },
-            { icon: Download, title: 'Past papers', description: 'CAT and FAT papers for practice and revision, sorted by semester.' },
-            { icon: Bookmark, title: 'Cheat sheets', description: 'Compact one-pagers for quick revision before exams.' },
-          ],
-        },
-        {
-          kind: 'grid',
-          eyebrow: 'Curated lists',
-          title: 'Best websites & apps',
-          description: 'The sites and apps students keep coming back to.',
-          items: [
-            { icon: Globe, title: 'Best websites', description: 'A categorized directory of student-useful websites and references.' },
-            { icon: Smartphone, title: 'Best apps', description: 'Mobile apps for study, coding, notes and campus life.' },
-            { icon: Link2, title: 'Useful links', description: 'A bookmarkable collection of links worth keeping close.' },
-            { icon: Star, title: 'Reading lists', description: 'Curated reading lists for going deeper into each specialization.' },
-          ],
-        },
-        {
-          kind: 'bento',
-          eyebrow: 'Learning',
-          title: 'Free courses & video',
-          description: 'Curated playlists and free courses worth your time.',
-          featured: 0,
-          items: [
-            { icon: Video, title: 'Video playlists', description: 'Hand-picked YouTube playlists for every core subject, reviewed by seniors.' },
-            { icon: Award, title: 'Free courses', description: 'Free and audited courses worth taking alongside your coursework.' },
-            { icon: GraduationCap, title: 'Recommended courses', description: 'Paid courses with student discounts and high signal-to-noise.' },
-            { icon: Bookmark, title: 'Reading lists', description: 'Curated reading lists for going deeper into each specialization.' },
-          ],
-        },
-        {
-          kind: 'grid',
-          eyebrow: 'Downloads',
-          title: 'Cheat sheets, templates & PDFs',
-          description: 'Ready-to-use downloads for study and productivity.',
-          items: [
-            { icon: FileStack, title: 'Cheat sheets', description: 'One-page references for DSA, OS, DBMS, CN and more.' },
-            { icon: LayoutTemplate, title: 'Templates', description: 'Resume, project report and presentation templates ready to use.' },
-            { icon: FileType, title: 'PDFs', description: 'Curated PDFs of notes, books and reference material.' },
-            { icon: Download, title: 'Lab records', description: 'Lab record templates and observation note formats.' },
-          ],
-        },
         {
           kind: 'features',
           eyebrow: 'By track',
@@ -80,6 +73,33 @@ export default function Resources() {
           ],
         },
       ]}
+      closing={
+        <section>
+          <SectionHeading
+            eyebrow="Library"
+            title="Search resources"
+            description="Search and filter across notes, books, videos, templates and more."
+          />
+          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <SearchBar
+              value={query}
+              onChange={setQuery}
+              placeholder="Search resources…"
+              className="sm:max-w-xs"
+            />
+            <ChipFilter options={categories} value={category} onChange={setCategory} allLabel="All" />
+          </div>
+          {filtered.length > 0 ? (
+            <ResourceCardGrid items={filtered} />
+          ) : (
+            <EmptyState
+              title="No resources found"
+              description="Try a different search term or category — more content arrives in future releases."
+              icon={Inbox}
+            />
+          )}
+        </section>
+      }
       closingCta={{
         title: 'Everything you need, in one library.',
         description: 'A searchable resource library with uploads will arrive in upcoming releases.',

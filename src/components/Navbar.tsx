@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Command, ArrowRight } from 'lucide-react';
 import { NAV_ITEMS } from '../config/navigation';
+import GlobalSearch from './GlobalSearch';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -135,8 +136,9 @@ export default function Navbar() {
               </div>
             </nav>
 
-            {/* CTA + mobile toggle */}
+            {/* CTA + search + mobile toggle */}
             <div className="flex items-center gap-2">
+              <GlobalSearch />
               <Link to="/contact" className="hidden btn-primary sm:inline-flex">
                 Get in touch
                 <ArrowRight className="h-3.5 w-3.5" />

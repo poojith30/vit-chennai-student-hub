@@ -1,12 +1,14 @@
+import { useMemo, useState } from 'react';
 import {
   Users, PartyPopper, Mic, CalendarDays, Languages, HeartHandshake,
-  Home, MessageCircle, Music, Sparkles, Utensils, Star,
+  Home, MessageCircle, Music, Sparkles, Utensils, Star, ArrowUpRight,
+  Github, Twitter, Instagram, Globe, UserPlus, Check,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { ArrowUpRight } from 'lucide-react';
 import PageShell from '../components/PageShell';
 import Reveal from '../components/Reveal';
 import SectionHeading from '../components/SectionHeading';
+import SearchBar from '../components/SearchBar';
+import EmptyState from '../components/EmptyState';
 
 type StateCard = {
   name: string;
@@ -33,7 +35,20 @@ const states: StateCard[] = [
   { name: 'International Students', tagline: 'A space for students from beyond India', accent: 'from-cyan-500 to-brand-600', emoji: 'IN' },
 ];
 
+const socials = [Github, Twitter, Instagram, Globe];
+
 export default function StateCommunities() {
+  const [query, setQuery] = useState('');
+  const [joined, setJoined] = useState<Record<string, boolean>>({});
+
+  const filtered = useMemo(() => {
+    if (!query) return states;
+    const q = query.toLowerCase();
+    return states.filter(
+      (s) => s.name.toLowerCase().includes(q) || s.tagline.toLowerCase().includes(q),
+    );
+  }, [query]);
+
   return (
     <PageShell
       hero={{
@@ -77,36 +92,75 @@ export default function StateCommunities() {
           <SectionHeading
             eyebrow="Directory"
             title="State communities"
-            description="Fifteen communities, each ready to grow. Tap a card to see what is coming."
+            description="Fifteen communities, each ready to grow. Search, join, and connect."
           />
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {states.map((s, i) => (
-              <Reveal key={s.name} delay={i * 40} variant="scale">
-                <Link
-                  to="/state-communities"
-                  onClick={(e) => e.preventDefault()}
-                  className="sheen-host group relative flex h-full flex-col overflow-hidden rounded-3xl glass-card p-5 transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:shadow-lift"
-                >
-                  <div className={`pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-gradient-to-br ${s.accent} opacity-20 blur-2xl transition-opacity duration-500 group-hover:opacity-40`} />
-                  <div className="relative flex items-center justify-between">
-                    <span className={`relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${s.accent} font-display text-sm font-bold text-white shadow-glow transition-transform duration-500 ease-out-expo group-hover:scale-110 group-hover:rotate-3`}>
-                      {s.emoji}
-                      <span className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/15" />
-                    </span>
-                    <ArrowUpRight className="h-4 w-4 text-ink-300 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand-600" />
-                  </div>
-                  <h3 className="relative mt-4 font-display text-[15px] font-semibold tracking-tight text-ink-900">
-                    {s.name}
-                  </h3>
-                  <p className="relative mt-1 text-[12px] leading-relaxed text-ink-500">{s.tagline}</p>
-                  <div className="relative mt-4 flex items-center gap-1.5 text-[11px] font-medium text-ink-400">
-                    <Star className="h-3 w-3 text-accent-500" />
-                    <span>Ready for expansion</span>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
+          <div className="mb-6">
+            <SearchBar
+              value={query}
+              onChange={setQuery}
+              placeholder="Search by state or tagline…"
+              className="sm:max-w-md"
+            />
           </div>
+          {filtered.length > 0 ? (
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {filtered.map((s, i) => {
+                const isJoined = !!joined[s.name];
+                return (
+                  <Reveal key={s.name} delay={i * 40} variant="scale">
+                    <div className="sheen-host group relative flex h-full flex-col overflow-hidden rounded-3xl glass-card p-5 transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:shadow-lift">
+                      <div className={`pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-gradient-to-br ${s.accent} opacity-20 blur-2xl transition-opacity duration-500 group-hover:opacity-40`} />
+                      <div className="relative flex items-center justify-between">
+                        <span className={`relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${s.accent} font-display text-sm font-bold text-white shadow-glow transition-transform duration-500 ease-out-expo group-hover:scale-110 group-hover:rotate-3`}>
+                          {s.emoji}
+                          <span className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/15" />
+                        </span>
+                        <ArrowUpRight className="h-4 w-4 text-ink-300 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand-600" />
+                      </div>
+                      <h3 className="relative mt-4 font-display text-[15px] font-semibold tracking-tight text-ink-900">
+                        {s.name}
+                      </h3>
+                      <p className="relative mt-1 text-[12px] leading-relaxed text-ink-500">{s.tagline}</p>
+                      <div className="relative mt-4 flex items-center gap-1.5 text-[11px] font-medium text-ink-400">
+                        <Star className="h-3 w-3 text-accent-500" />
+                        <span>Ready for expansion</span>
+                      </div>
+                      <div className="relative mt-4 flex items-center justify-between border-t border-ink-100 pt-4">
+                        <button
+                          type="button"
+                          onClick={() => setJoined((j) => ({ ...j, [s.name]: !j[s.name] }))}
+                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold transition-all duration-200 ${
+                            isJoined
+                              ? 'bg-accent-500 text-white'
+                              : 'bg-ink-900 text-white hover:bg-ink-800'
+                          }`}
+                        >
+                          {isJoined ? <Check className="h-3 w-3" /> : <UserPlus className="h-3 w-3" />}
+                          {isJoined ? 'Joined' : 'Join'}
+                        </button>
+                        <div className="flex items-center gap-1">
+                          {socials.map((Soc, si) => (
+                            <span
+                              key={si}
+                              className="flex h-7 w-7 items-center justify-center rounded-lg border border-ink-200 bg-white/70 text-ink-400 transition hover:border-ink-300 hover:text-ink-700"
+                            >
+                              <Soc className="h-3.5 w-3.5" />
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </Reveal>
+                );
+              })}
+            </div>
+          ) : (
+            <EmptyState
+              title="No community found"
+              description="Try a different search — all 15 communities are ready to grow."
+              icon={Users}
+            />
+          )}
         </section>
       }
       closingCta={{

@@ -1,11 +1,53 @@
+import { useState } from 'react';
 import {
-  Briefcase, Building2, Globe, CalendarClock, GraduationCap, FileText,
-  Award, LineChart, Rocket, Trophy, Users, Sparkles, Flame,
-  BadgeCheck, BookOpen, Gift, Code2, HandHeart, Megaphone,
+  Briefcase, Building2, Globe, GraduationCap, FileText,
+  Award, LineChart, Rocket, Trophy, Users,
+  BadgeCheck, Gift, Code2, HandHeart, Megaphone, CalendarDays, Clock,
 } from 'lucide-react';
 import PageShell from '../components/PageShell';
+import SectionHeading from '../components/SectionHeading';
+import ChipFilter from '../components/ChipFilter';
+import StatusBadge, { type Status } from '../components/StatusBadge';
+import Reveal from '../components/Reveal';
+
+type Opportunity = {
+  icon: typeof Briefcase;
+  title: string;
+  description: string;
+  category: string;
+  status: Status;
+  deadline: string;
+};
+
+const opportunities: Opportunity[] = [
+  { icon: Building2, title: 'Startup SDE intern', description: 'Early-stage role with high ownership across the stack. Remote-friendly.', category: 'internships', status: 'open', deadline: 'Rolling' },
+  { icon: Briefcase, title: 'Product company internship', description: 'Summer SDE internship at an established product company.', category: 'internships', status: 'upcoming', deadline: '15 Mar' },
+  { icon: Globe, title: 'Global research program', description: 'International research internship for CSE students.', category: 'internships', status: 'upcoming', deadline: '30 Apr' },
+  { icon: Trophy, title: 'Inter-college hackathon', description: '48-hour hackathon with prizes and recruiter visibility.', category: 'hackathons', status: 'open', deadline: '10 Feb' },
+  { icon: Code2, title: 'LeetCode weekly contest', description: 'Weekly algorithmic contest — great for interview prep.', category: 'contests', status: 'open', deadline: 'Every Sunday' },
+  { icon: Megaphone, title: 'Product case challenge', description: 'Design and pitch a product solution to a panel.', category: 'contests', status: 'upcoming', deadline: '22 Mar' },
+  { icon: Users, title: 'Cloud workshop series', description: 'Hands-on cloud fundamentals workshop run by seniors.', category: 'workshops', status: 'open', deadline: '05 Feb' },
+  { icon: BadgeCheck, title: 'AWS certification path', description: 'Structured prep path for the AWS Cloud Practitioner exam.', category: 'certifications', status: 'open', deadline: 'Self-paced' },
+  { icon: Gift, title: 'Merit scholarship', description: 'Merit-based scholarship for top-performing students.', category: 'scholarships', status: 'upcoming', deadline: '01 May' },
+  { icon: HandHeart, title: 'GSoC 2025', description: 'Google Summer of Code — contribute to open source with a stipend.', category: 'oss', status: 'upcoming', deadline: '18 Mar' },
+  { icon: HandHeart, title: 'MLH Fellowship', description: 'A 12-week open-source fellowship for students.', category: 'oss', status: 'closed', deadline: 'Closed' },
+  { icon: Rocket, title: 'Startup incubator', description: 'On-campus incubator for student-founded ventures.', category: 'internships', status: 'open', deadline: '28 Feb' },
+];
+
+const categoryOptions = [
+  { label: 'Internships', value: 'internships' },
+  { label: 'Hackathons', value: 'hackathons' },
+  { label: 'Contests', value: 'contests' },
+  { label: 'Workshops', value: 'workshops' },
+  { label: 'Certifications', value: 'certifications' },
+  { label: 'Scholarships', value: 'scholarships' },
+  { label: 'Open Source', value: 'oss' },
+];
 
 export default function Opportunities() {
+  const [category, setCategory] = useState('all');
+  const filtered = category === 'all' ? opportunities : opportunities.filter((o) => o.category === category);
+
   return (
     <PageShell
       hero={{
@@ -16,55 +58,6 @@ export default function Opportunities() {
         icon: Briefcase,
       }}
       sections={[
-        {
-          kind: 'bento',
-          eyebrow: 'Internships',
-          title: 'Internship board',
-          description: 'Curated internship openings from startups, product companies and research labs.',
-          featured: 0,
-          items: [
-            { icon: Building2, title: 'Startup internships', description: 'Early-stage roles with high ownership and fast learning curves, curated for students.' },
-            { icon: Briefcase, title: 'Product company roles', description: 'SDE internships at established product and platform companies.' },
-            { icon: Globe, title: 'Remote & global', description: 'Remote-first opportunities and international research programs.' },
-            { icon: CalendarClock, title: 'Application tracker', description: 'Track deadlines, statuses and follow-ups for every application.' },
-          ],
-        },
-        {
-          kind: 'grid',
-          eyebrow: 'Compete',
-          title: 'Hackathons & contests',
-          description: 'Compete, build and get noticed — the events that move your profile forward.',
-          items: [
-            { icon: Trophy, title: 'Hackathons', description: 'On-campus and global hackathons with team-building support and idea prompts.' },
-            { icon: Code2, title: 'Coding contests', description: 'LeetCode, Codeforces and CodeChef contests with prep resources.' },
-            { icon: Megaphone, title: 'Case challenges', description: 'Product, design and business case competitions worth entering.' },
-            { icon: Flame, title: 'Streak challenges', description: 'Community-driven daily and weekly coding streaks.' },
-          ],
-        },
-        {
-          kind: 'features',
-          eyebrow: 'Grow',
-          title: 'Workshops & certifications',
-          description: 'Structured learning and credentials that complement your degree.',
-          items: [
-            { icon: Users, title: 'Workshops', description: 'Hands-on workshops run by clubs, seniors and industry mentors.' },
-            { icon: BadgeCheck, title: 'Certifications', description: 'Cloud, ML and developer certifications worth pursuing, with prep paths.' },
-            { icon: BookOpen, title: 'Bootcamps', description: 'Curated free and paid bootcamps across domains.' },
-            { icon: LineChart, title: 'Skill tracks', description: 'Self-paced tracks that map to real job roles.' },
-          ],
-        },
-        {
-          kind: 'features',
-          eyebrow: 'Support',
-          title: 'Scholarships & open source',
-          description: 'Funding and community programs that help you grow while giving back.',
-          items: [
-            { icon: Gift, title: 'Scholarships', description: 'Merit and need-based scholarships with eligibility and deadlines.' },
-            { icon: HandHeart, title: 'Open source programs', description: 'GSoC, MLH Fellowship, Outreachy and similar programs with guides.' },
-            { icon: Rocket, title: 'Incubators', description: 'Startup and project incubators accessible to students.' },
-            { icon: Sparkles, title: 'Mentor matches', description: 'Get matched with seniors who have walked the path you are aiming for.' },
-          ],
-        },
         {
           kind: 'features',
           eyebrow: 'Placements',
@@ -90,6 +83,49 @@ export default function Opportunities() {
           ],
         },
       ]}
+      closing={
+        <section>
+          <SectionHeading
+            eyebrow="Board"
+            title="Opportunity board"
+            description="Filter by category and track deadlines. Status badges show what is open right now."
+          />
+          <div className="mb-6">
+            <ChipFilter options={categoryOptions} value={category} onChange={setCategory} allLabel="All" />
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((o, i) => {
+              const Icon = o.icon;
+              return (
+                <Reveal key={o.title} delay={i * 50} variant="scale">
+                  <article className="sheen-host group relative flex h-full flex-col overflow-hidden rounded-3xl glass-card p-6 transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:shadow-lift">
+                    <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gradient-to-br from-brand-300/40 via-cyan-300/30 to-accent-300/40 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="relative flex items-start justify-between">
+                      <span className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-ink-900 text-white shadow-glow transition-transform duration-500 ease-out-expo group-hover:scale-110 group-hover:rotate-3">
+                        <Icon className="h-5 w-5" />
+                        <span className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/10" />
+                      </span>
+                      <StatusBadge status={o.status} />
+                    </div>
+                    <h3 className="relative mt-5 font-display text-lg font-semibold tracking-tight text-ink-900">{o.title}</h3>
+                    <p className="relative mt-2 flex-1 text-sm leading-relaxed text-ink-500">{o.description}</p>
+                    <div className="relative mt-5 flex items-center gap-4 border-t border-ink-100 pt-4 text-[12px] text-ink-500">
+                      <span className="inline-flex items-center gap-1.5">
+                        <CalendarDays className="h-3.5 w-3.5 text-brand-500" />
+                        {o.deadline}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <Clock className="h-3.5 w-3.5 text-accent-500" />
+                        {o.category}
+                      </span>
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
+        </section>
+      }
       closingCta={{
         title: 'Your next opportunity starts here.',
         description: 'A live, curated opportunity board will arrive in upcoming releases.',
