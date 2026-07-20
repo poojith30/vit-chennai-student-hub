@@ -1,6 +1,7 @@
 import {
   Briefcase, Building2, Globe, CalendarClock, GraduationCap, FileText,
-  Award, LineChart, Rocket, Mail, Trophy, Users, Sparkles,
+  Award, LineChart, Rocket, Trophy, Users, Sparkles, Flame,
+  BadgeCheck, BookOpen, Gift, Code2, HandHeart, Megaphone,
 } from 'lucide-react';
 import PageShell from '../components/PageShell';
 
@@ -29,6 +30,42 @@ export default function Opportunities() {
           ],
         },
         {
+          kind: 'grid',
+          eyebrow: 'Compete',
+          title: 'Hackathons & contests',
+          description: 'Compete, build and get noticed — the events that move your profile forward.',
+          items: [
+            { icon: Trophy, title: 'Hackathons', description: 'On-campus and global hackathons with team-building support and idea prompts.' },
+            { icon: Code2, title: 'Coding contests', description: 'LeetCode, Codeforces and CodeChef contests with prep resources.' },
+            { icon: Megaphone, title: 'Case challenges', description: 'Product, design and business case competitions worth entering.' },
+            { icon: Flame, title: 'Streak challenges', description: 'Community-driven daily and weekly coding streaks.' },
+          ],
+        },
+        {
+          kind: 'features',
+          eyebrow: 'Grow',
+          title: 'Workshops & certifications',
+          description: 'Structured learning and credentials that complement your degree.',
+          items: [
+            { icon: Users, title: 'Workshops', description: 'Hands-on workshops run by clubs, seniors and industry mentors.' },
+            { icon: BadgeCheck, title: 'Certifications', description: 'Cloud, ML and developer certifications worth pursuing, with prep paths.' },
+            { icon: BookOpen, title: 'Bootcamps', description: 'Curated free and paid bootcamps across domains.' },
+            { icon: LineChart, title: 'Skill tracks', description: 'Self-paced tracks that map to real job roles.' },
+          ],
+        },
+        {
+          kind: 'features',
+          eyebrow: 'Support',
+          title: 'Scholarships & open source',
+          description: 'Funding and community programs that help you grow while giving back.',
+          items: [
+            { icon: Gift, title: 'Scholarships', description: 'Merit and need-based scholarships with eligibility and deadlines.' },
+            { icon: HandHeart, title: 'Open source programs', description: 'GSoC, MLH Fellowship, Outreachy and similar programs with guides.' },
+            { icon: Rocket, title: 'Incubators', description: 'Startup and project incubators accessible to students.' },
+            { icon: Sparkles, title: 'Mentor matches', description: 'Get matched with seniors who have walked the path you are aiming for.' },
+          ],
+        },
+        {
           kind: 'features',
           eyebrow: 'Placements',
           title: 'Full-time placements',
@@ -41,16 +78,15 @@ export default function Opportunities() {
           ],
         },
         {
-          kind: 'grid',
-          eyebrow: 'Beyond campus',
-          title: 'Research & competitions',
-          description: 'Open calls for research programs, fellowships and student competitions.',
-          items: [
-            { icon: Rocket, title: 'Research programs', description: 'Summer research programs, MS/PhD calls and open-source fellowships.' },
-            { icon: Trophy, title: 'Competitions', description: 'Hackathons, case challenges and design competitions worth entering.' },
-            { icon: Users, title: 'Team finder', description: 'Find teammates for hackathons and competitions across specializations.' },
-            { icon: Mail, title: 'Newsletter sign-up', description: 'A weekly digest of new opportunities, straight to your inbox.' },
-            { icon: Sparkles, title: 'Mentor matches', description: 'Get matched with seniors who have walked the path you are aiming for.' },
+          kind: 'stats',
+          eyebrow: 'By the numbers',
+          title: 'Opportunities, in figures',
+          description: 'Placeholder figures for what the board will track once real data arrives.',
+          stats: [
+            { value: '50+', label: 'Internship tracks', icon: Briefcase },
+            { value: '12', label: 'Hackathons / year', icon: Trophy },
+            { value: '20+', label: 'Certifications', icon: BadgeCheck },
+            { value: '8', label: 'OSS programs', icon: HandHeart },
           ],
         },
       ]}

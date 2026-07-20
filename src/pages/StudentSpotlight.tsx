@@ -1,6 +1,6 @@
 import {
   Star, Trophy, Award, GraduationCap, Briefcase, Palette, Cpu,
-  Heart, Quote, Flame,
+  Heart, Quote, Users, Flame, Rocket, FolderGit2,
 } from 'lucide-react';
 import PageShell from '../components/PageShell';
 
@@ -18,7 +18,7 @@ export default function StudentSpotlight() {
         {
           kind: 'bento',
           eyebrow: 'Achievements',
-          title: 'Recent wins',
+          title: 'Student achievements',
           description: 'A wall of recognition for students doing remarkable things.',
           featured: 0,
           items: [
@@ -26,6 +26,18 @@ export default function StudentSpotlight() {
             { icon: Award, title: 'Research & papers', description: 'Student publications and research contributions worth celebrating.' },
             { icon: Briefcase, title: 'Placement highlights', description: 'Notable offers and placement season standouts from this year.' },
             { icon: Flame, title: 'Open source', description: 'Students making meaningful open-source contributions to real projects.' },
+          ],
+        },
+        {
+          kind: 'grid',
+          eyebrow: 'Build',
+          title: 'Projects & startups',
+          description: 'Student-built projects and ventures worth a closer look.',
+          items: [
+            { icon: FolderGit2, title: 'Student projects', description: 'A curated showcase of projects built by students across domains.' },
+            { icon: Rocket, title: 'Student startups', description: 'Student-founded ventures and the stories behind them.' },
+            { icon: Cpu, title: 'Research projects', description: 'Capstone and research projects making an impact.' },
+            { icon: Palette, title: 'Creative work', description: 'Design, content and creative tech work by CSE students.' },
           ],
         },
         {
@@ -56,6 +68,18 @@ export default function StudentSpotlight() {
               'Student-led talks and project demos worth catching',
             ],
           },
+        },
+        {
+          kind: 'stats',
+          eyebrow: 'By the numbers',
+          title: 'The community in figures',
+          description: 'Placeholder figures for what the spotlight will track over time.',
+          stats: [
+            { value: '40+', label: 'Featured students', icon: Users },
+            { value: '15', label: 'Hackathon wins', icon: Trophy },
+            { value: '10', label: 'OSS contributors', icon: Flame },
+            { value: '5', label: 'Student startups', icon: Rocket },
+          ],
         },
       ]}
       closingCta={{

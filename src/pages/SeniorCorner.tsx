@@ -1,6 +1,7 @@
 import {
   Award, Compass, BookOpen, Briefcase, Lightbulb, Quote, Star,
-  GraduationCap, Users, Target, Coffee,
+  GraduationCap, Users, Target, Coffee, FileText, PenLine, MessageSquare,
+  FolderGit2, Rocket, Code2, Brain,
 } from 'lucide-react';
 import PageShell from '../components/PageShell';
 
@@ -17,29 +18,50 @@ export default function SeniorCorner() {
       sections={[
         {
           kind: 'features',
-          eyebrow: 'Advice',
-          title: 'Words from those who have been there',
-          description: 'Curated advice on the things students wish they had known earlier.',
+          eyebrow: 'Experiences',
+          title: 'Placement & internship stories',
+          description: 'Real journeys from seniors who have been through placement and internship seasons.',
           items: [
-            { icon: Compass, title: 'First-year advice', description: 'How to settle in, manage time and build good habits early in your CSE journey.' },
-            { icon: BookOpen, title: 'Academic strategies', description: 'How to approach CATs, FATs and difficult courses effectively without burning out.' },
-            { icon: Briefcase, title: 'Placement prep', description: 'When to start, what to prioritize and how to stay sane during placement season.' },
-            { icon: Lightbulb, title: 'Project & research', description: 'How to find meaningful projects and research opportunities that actually matter.' },
-            { icon: Target, title: 'Goal setting', description: 'How seniors planned their four years — and what they would do differently.' },
-            { icon: Coffee, title: 'Work-life balance', description: 'Honest takes on managing academics with clubs, friends and rest.' },
+            { icon: Briefcase, title: 'Placement experiences', description: 'Company-wise breakdowns of placement rounds, questions and offers.' },
+            { icon: GraduationCap, title: 'Internship stories', description: 'How seniors landed and navigated their internships, with takeaways.' },
+            { icon: Quote, title: 'Interview deep-dives', description: 'Detailed interview experiences with topics, rounds and prep notes.' },
+            { icon: Star, title: 'Offer reflections', description: 'Honest takes on offers, negotiations and choosing between roles.' },
           ],
         },
         {
           kind: 'grid',
-          eyebrow: 'Stories',
-          title: 'Senior stories',
-          description: 'Personal journeys — the wins, the detours and the lessons.',
+          eyebrow: 'Career prep',
+          title: 'Resume & interview prep',
+          description: 'Practical resources to get you placement-ready, one step at a time.',
           items: [
-            { icon: Quote, title: 'My placement journey', description: 'A senior reflects on the highs and lows of placement season.' },
-            { icon: Star, title: 'From introvert to club lead', description: 'How getting involved changed one senior’s campus life.' },
-            { icon: GraduationCap, title: 'Choosing a specialization', description: 'How one senior decided between AI, Data Science and Cyber Security.' },
-            { icon: Lightbulb, title: 'The side project that worked', description: 'A senior on building something people actually used.' },
-            { icon: Compass, title: 'Switching tracks', description: 'What it is like to pivot between specializations mid-way.' },
+            { icon: FileText, title: 'Resume tips', description: 'Structure, bullet points and common mistakes — with senior-approved examples.' },
+            { icon: PenLine, title: 'Resume templates', description: 'Clean, ATS-friendly templates ready to customize for your profile.' },
+            { icon: MessageSquare, title: 'Mock interviews', description: 'How to run mock interviews with peers and what to focus on.' },
+            { icon: Brain, title: 'Interview preparation', description: 'Topic checklists for DSA, core CS, projects and HR rounds.' },
+          ],
+        },
+        {
+          kind: 'grid',
+          eyebrow: 'Academics',
+          title: 'Subject guidance',
+          description: 'Seniors on the subjects that trip students up most.',
+          items: [
+            { icon: BookOpen, title: 'Tough subject guides', description: 'How to approach the subjects students find hardest, semester by semester.' },
+            { icon: Compass, title: 'Specialization advice', description: 'How seniors chose between AI, Data Science, Cyber Security and more.' },
+            { icon: Target, title: 'Exam strategy', description: 'How to prepare for CATs and FATs without burning out.' },
+            { icon: Coffee, title: 'Study routines', description: 'Real study routines and schedules that worked for seniors.' },
+          ],
+        },
+        {
+          kind: 'features',
+          eyebrow: 'Build',
+          title: 'Project ideas',
+          description: 'Inspiration and guidance for projects that actually stand out.',
+          items: [
+            { icon: FolderGit2, title: 'Project ideas', description: 'Difficulty-tagged project ideas across web, ML, systems and more.' },
+            { icon: Code2, title: 'Tech stack picks', description: 'Seniors on the stacks they used and would choose again.' },
+            { icon: Rocket, title: 'Showcase guide', description: 'How to present projects on GitHub and in your resume.' },
+            { icon: Lightbulb, title: 'Open source starts', description: 'How seniors made their first open-source contributions.' },
           ],
         },
         {
